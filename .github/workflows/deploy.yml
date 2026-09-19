@@ -5,20 +5,23 @@ on:
     branches:
       - main
     paths:
-      - 'index.html'  # This makes the script trigger ONLY when index.html changes
+      - 'index.html'
+      - 'favicon.png'
+      - '.github/workflows/deploy.yml'
 
 jobs:
   web-deploy:
     name: FTP Upload
     runs-on: ubuntu-latest
-    steps:
-    - name: Get latest code
-      uses: actions/checkout@v4
 
-    - name: Sync files via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ftpupload.net
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: htdocs/  # Uploads directly into InfinityFree's public folder
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v4
+
+      - name: Sync files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftpupload.net
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: htdocs/
